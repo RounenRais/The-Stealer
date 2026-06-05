@@ -1,0 +1,29 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 02a22f177ef004d47a1621330de3573c, type: 3}
+  m_Name: Mushroom
+  m_EditorClassIdentifier: 
+  enemyName: Gay Mushroom
+  maxHP: 100
+  battleSprite: {fileID: -654737500350741434, guid: f80910c300326e6449ae7dc2103f4872, type: 3}
+  worldSprite: {fileID: -654737500350741434, guid: f80910c300326e6449ae7dc2103f4872, type: 3}
+  attackList:
+  - {fileID: 11400000, guid: e9cdd252935a3e948a5b70a44032cb05, type: 2}
+  animationSprites:
+  - {fileID: -654737500350741434, guid: f80910c300326e6449ae7dc2103f4872, type: 3}
+  - {fileID: -7095357931098475539, guid: f80910c300326e6449ae7dc2103f4872, type: 3}
+  - {fileID: 2163288782968092727, guid: f80910c300326e6449ae7dc2103f4872, type: 3}
+  - {fileID: -4210055123308685074, guid: f80910c300326e6449ae7dc2103f4872, type: 3}
+  - {fileID: -9004658040723243172, guid: f80910c300326e6449ae7dc2103f4872, type: 3}
+  - {fileID: 920352064709726215, guid: f80910c300326e6449ae7dc2103f4872, type: 3}
+  - {fileID: -8565668554048287875, guid: f80910c300326e6449ae7dc2103f4872, type: 3}
+  expReward: 0

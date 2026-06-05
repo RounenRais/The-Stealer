@@ -1,0 +1,29 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 02a22f177ef004d47a1621330de3573c, type: 3}
+  m_Name: Skeleton
+  m_EditorClassIdentifier: 
+  enemyName: Skeleton
+  maxHP: 100
+  battleSprite: {fileID: 21300000, guid: 7eefaa58c0745e64fb2bca47c1409eb3, type: 3}
+  worldSprite: {fileID: 21300000, guid: 7eefaa58c0745e64fb2bca47c1409eb3, type: 3}
+  attackList:
+  - {fileID: 11400000, guid: 0a099df18a984fb40bf5996a4fb08e9a, type: 2}
+  - {fileID: 11400000, guid: 7d16f59a1976bce47993e2eb133347bf, type: 2}
+  animationSprites:
+  - {fileID: 21300000, guid: f039acb61c6724744be7c8df857e56ab, type: 3}
+  - {fileID: 21300000, guid: f039acb61c6724744be7c8df857e56ab, type: 3}
+  - {fileID: 21300000, guid: f039acb61c6724744be7c8df857e56ab, type: 3}
+  - {fileID: 21300000, guid: 1ccaec89d2c980e47b7c6d1eafef84fb, type: 3}
+  - {fileID: 21300000, guid: 1ccaec89d2c980e47b7c6d1eafef84fb, type: 3}
+  - {fileID: 21300000, guid: 1ccaec89d2c980e47b7c6d1eafef84fb, type: 3}
+  expReward: 0
