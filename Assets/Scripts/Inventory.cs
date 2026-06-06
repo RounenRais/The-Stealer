@@ -25,4 +25,12 @@ public class Inventory : MonoBehaviour
             }
         }
     }
+    public void RemoveItem(int index)
+    {
+        if (index >= 0 && index < altBar.Length)
+        {
+            altBar[index] = null;
+            InventoryUI.instance.UpdateSlot(index, null);
+        }
+    }
 }

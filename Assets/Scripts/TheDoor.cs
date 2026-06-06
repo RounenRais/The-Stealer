@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 public class TheDoor : MonoBehaviour
@@ -24,17 +25,23 @@ public class TheDoor : MonoBehaviour
             CheckInventory();
         }
     }
-
+    void Open(int index,GameObject selectedObject) {
+        InventoryUI.instance.UpdateSlot(index, null);
+        Destroy(selectedObject);
+    }
     void CheckInventory()
     {
         for (int i = 0; i < Inventory.instance.altBar.Length; i++)
         {
-            // null kontrolü þart
             if (Inventory.instance.altBar[i] == null) continue;
 
             if (Inventory.instance.altBar[i] == searchedItem)
             {
-                Debug.Log("Kapý açýldý!");
+                // Anahtarý envanterden kaldýr
+                Inventory.instance.altBar[i] = null;
+                InventoryUI.instance.slots[i].SetEmpty();
+
+                Debug.Log("Kapý açý ldý!");
                 Destroy(gameObject);
                 return;
             }

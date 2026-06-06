@@ -19,11 +19,11 @@ public class InventorySlot : MonoBehaviour
         icon.enabled = true;
         gameObject.SetActive(true);
     }
+
     public void SetEmpty()
     {
         currentItem = null;
         icon.sprite = null;
-        icon.gameObject.SetActive(false);
-        amountText.gameObject.SetActive(false);
+
     }
 }

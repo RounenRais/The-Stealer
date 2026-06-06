@@ -13,32 +13,57 @@ public class GameManager : MonoBehaviour
     public GameObject worldObjects;
     public GameObject gameOverCanvas;
     private WorldEnemy currentEnemy;
+    public GameObject DoNotShowInGame;
     public GameObject inventoryCanvas;
     public Image BottomHp;
     public TextMeshProUGUI HpText;
     void Awake()
     {
-        if (instance == null) { instance = this;  }
+        if (instance == null) { instance = this;
+
+        }
         else Destroy(gameObject);
+        DontDestroyOnLoad(gameObject);
     }
+   
+    
 
     void Start()
     {
         QualitySettings.vSyncCount = 0;
         Application.targetFrameRate = 60;
+
+
     }
     public void EnterCombat(WorldEnemy enemy)
     {
         currentEnemy = enemy;
         worldObjects.SetActive(false);
         battleCanvas.SetActive(true);
+        DoNotShowInGame.SetActive(false);
+
         playerMovement.enabled = false;
         EnemyBattle.instance.data = enemy.data;
         BattleManager.instance.StartBattle();
 
-
+    }
+    void OnEnable()
+    {
+        SceneManager.sceneLoaded += OnSceneLoaded;
     }
 
+    void OnDisable()
+    {
+        SceneManager.sceneLoaded -= OnSceneLoaded;
+    }
+
+    void OnSceneLoaded(Scene scene, LoadSceneMode mode)
+    {
+        Debug.Log("Scene Loaded");
+        worldObjects = GameObject.Find("WorldObjects");
+        if (battleCanvas != null) battleCanvas.SetActive(false);
+        if (gameOverCanvas != null) gameOverCanvas.SetActive(false);
+    }
     public void ExitCombat(bool playerWon)
     {
         worldObjects.SetActive(true);
@@ -49,7 +74,9 @@ public class GameManager : MonoBehaviour
         HpText.text = PlayerBattle.instance.currentHP.ToString() + " / " + PlayerBattle.instance.maxHP.ToString();
         if (playerWon && currentEnemy != null)
         {
+
             currentEnemy.isDefeated = true;
+            DoNotShowInGame.SetActive(true);
             currentEnemy.gameObject.SetActive(false);
             currentEnemy = null;
         }
