@@ -16,12 +16,10 @@ public class EnemyBattle : MonoBehaviour
     int spriteCounter = 0;
     float animationTimer = 0f;
     public float animationSpeed = 0.12f; // sprite deðiþme süresi
-
     void Awake()
     {
         instance = this;
     }
-
     void Update()
     {
         AnimateEnemy();

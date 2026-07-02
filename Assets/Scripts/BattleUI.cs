@@ -14,7 +14,9 @@ public class BattleUI : MonoBehaviour
     public TextMeshProUGUI[] attackButtonTexts; // buton yazýlarý
     public void ShowMessage(string message)
     {
+        battleLog.gameObject.SetActive(true);
         battleLog.text = message;
+
     }
     public void HideAllButtons()
 {
@@ -38,7 +40,10 @@ public class BattleUI : MonoBehaviour
         attackButtons.SetActive(false);
         mainButtons.SetActive(true);
     }
-
+    public void HideLog()
+    {
+        battleLog.gameObject.SetActive(false); 
+    }
     void SetupAttackButtons()
     {
         // PlayerBattle'daki unlockedAttacks listesine göre butonlarý ayarla

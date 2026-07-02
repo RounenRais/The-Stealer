@@ -22,14 +22,73 @@ public class BattleManager : MonoBehaviour
         }
         else Destroy(gameObject);
     }
+    public void Steal()
+    {
+        if (state != BattleState.PLAYERTURN) return;
 
+        AttackData stealedAttack = enemyBattle.data.attackList[0];
+
+        if (PlayerBattle.instance.unlockedAttacks.Contains(stealedAttack))
+        {
+            StartCoroutine(AlreadyKnown());
+            return;
+        }
+
+        BattleUI.instance.HideAllButtons();
+        StealMinigame.instance.StartMinigame();
+    }
+
+    IEnumerator AlreadyKnown()
+    {
+        BattleUI.instance.HideAllButtons(); // butonlarý gizle
+        BattleUI.instance.ShowMessage("Bu saldýrýyý zaten biliyorsun!");
+        yield return new WaitForSeconds(1.5f);
+        BattleUI.instance.ShowMessage("");
+        PlayerTurn(); // mainButtons açýlýr
+    }
+    public void OnStealSuccess()
+    {
+        StartCoroutine(StealMove());
+    }
+
+    public void OnStealFail()
+    {
+        StartCoroutine(StealFailMove());
+    }
+    IEnumerator StealFailMove()
+    {
+        BattleUI.instance.ShowMessage("Steal baþarýsýz! Düþman saldýrdý!");
+        yield return new WaitForSeconds(1f);
+        state = BattleState.ENEMYTURN;
+        StartCoroutine(EnemyTurn());
+    }
+    IEnumerator StealMove()
+    {
+        Debug.Log("Steal move executed");
+        BattleUI.instance.HideAllButtons();
+        AttackData StealedAttack= EnemyBattle.instance.data.attackList[0];
+        int attackCount = EnemyBattle.instance.data.attackList.Count;
+        PlayerBattle.instance.AddMove(StealedAttack);
+        //if (!(EnemyBattle.instance.data.attackList.Count > attackCount))
+        //{
+        //    BattleUI.instance.ShowMessage("You already know "+ StealedAttack.attackName + "!");
+        //}
+       
+            BattleUI.instance.ShowMessage(StealedAttack.attackName + " is stealed!");
+       
+
+        yield return new WaitForSeconds(1.5f);
+        state = BattleState.ENEMYTURN;
+        
+        StartCoroutine(EnemyTurn());
+
+    }
     public void StartBattle()
     {
         state = BattleState.START;
         BattleUI.instance.RefreshAttackButtons();
         StartCoroutine(SetupBattle());
     }
-
     IEnumerator SetupBattle()
     {
         BattleUI.instance.HideAllButtons();
@@ -47,12 +106,13 @@ public class BattleManager : MonoBehaviour
         BattleUI.instance.ShowMessage("");
         BattleUI.instance.mainButtons.SetActive(true);
     }
-
+  
     public void PlayerAction(AttackData attack)
     {
         if (state != BattleState.PLAYERTURN) return;
         StartCoroutine(PlayerAttack(attack));
     }
+
     IEnumerator FlashRed(Image image)
     {
         // Önce anýnda kýrmýzý yap
@@ -71,13 +131,14 @@ public class BattleManager : MonoBehaviour
 
         image.color = Color.white;
     }
+
     IEnumerator PlayerAttack(AttackData attack)
     {
         BattleUI.instance.HideAllButtons();
         BattleUI.instance.ShowMessage(attack.attackName + " kullandý!");
 
         yield return new WaitForSeconds(0.8f);
-
+        BattleUI.instance.HideLog();
         enemyBattle.TakeDamage(attack.damage);
         StartCoroutine(FlashRed(enemyBattle.EnemyImage)); // hasar anýnda flash
 
@@ -111,7 +172,6 @@ public class BattleManager : MonoBehaviour
         StartCoroutine(FlashRed(playerImage));
         playerBattle.TakeDamage(enemyAttack.damage);
         yield return new WaitForSeconds(1f);
-
         BattleUI.instance.ShowMessage(
             enemyAttack.damage + " hasar aldýn!"
         );

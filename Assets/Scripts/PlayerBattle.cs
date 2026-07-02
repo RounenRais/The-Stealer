@@ -18,13 +18,31 @@ public class PlayerBattle : MonoBehaviour
         instance = this;
         currentHP = maxHP;
     }
+ 
+     public void AddMove(AttackData attack)
+    {
+        if (unlockedAttacks.Contains(attack))
+        {
+            return;
+        }
+        if (unlockedAttacks.Count>=4) {
+            unlockedAttacks.RemoveAt(0);
+        }
+        unlockedAttacks.Add(attack);
+        BattleUI.instance.RefreshAttackButtons();
+    }
     public void TakeDamage(int amount)
     {
         currentHP -= amount;
-        currentHP = Mathf.Clamp(currentHP, 0, maxHP); // 0 altýna düþmesin
+        currentHP = Mathf.Clamp(currentHP, 0, maxHP); 
         UpdateHPBar();
     }
-
+    public void Heal(int amount)
+    {
+        currentHP += amount;
+        currentHP = Mathf.Clamp(currentHP, 0, maxHP); 
+        UpdateHPBar();
+    }
  
 
     void UpdateHPBar()
@@ -32,20 +50,18 @@ public class PlayerBattle : MonoBehaviour
         // Lerp ile animasyonlu geçiþ
         StartCoroutine(AnimateHPBar());
     }
-
     IEnumerator AnimateHPBar()
     {
         float targetFill = (float)currentHP / maxHP;
         float currentFill = hpBar.fillAmount;
         float elapsed = 0f;
-
         while (elapsed < 0.5f)
         {
             elapsed += Time.deltaTime;
             hpBar.fillAmount = Mathf.Lerp(currentFill, targetFill, elapsed / 0.5f);
             yield return null;
         }
-
+        GameManager.instance.UpdateHpUI();
         hpBar.fillAmount = targetFill;
     }
     public bool IsDead()

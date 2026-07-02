@@ -26,14 +26,11 @@ public class GameManager : MonoBehaviour
         DontDestroyOnLoad(gameObject);
     }
    
-    
-
+  
     void Start()
     {
         QualitySettings.vSyncCount = 0;
         Application.targetFrameRate = 60;
-
-
     }
     public void EnterCombat(WorldEnemy enemy)
     {
@@ -41,7 +38,6 @@ public class GameManager : MonoBehaviour
         worldObjects.SetActive(false);
         battleCanvas.SetActive(true);
         DoNotShowInGame.SetActive(false);
-
         playerMovement.enabled = false;
         EnemyBattle.instance.data = enemy.data;
         BattleManager.instance.StartBattle();
@@ -64,14 +60,18 @@ public class GameManager : MonoBehaviour
         if (battleCanvas != null) battleCanvas.SetActive(false);
         if (gameOverCanvas != null) gameOverCanvas.SetActive(false);
     }
+    public void UpdateHpUI()
+    {
+        float targetFill = (float)PlayerBattle.instance.currentHP / PlayerBattle.instance.maxHP;
+        BottomHp.fillAmount = targetFill;
+        HpText.text = PlayerBattle.instance.currentHP.ToString() + " / " + PlayerBattle.instance.maxHP.ToString();
+    }
     public void ExitCombat(bool playerWon)
     {
         worldObjects.SetActive(true);
         battleCanvas.SetActive(false);
         playerMovement.enabled = true;
-        float targetFill = (float) PlayerBattle.instance.currentHP/ PlayerBattle.instance.maxHP;
-        BottomHp.fillAmount = targetFill;
-        HpText.text = PlayerBattle.instance.currentHP.ToString() + " / " + PlayerBattle.instance.maxHP.ToString();
+
         if (playerWon && currentEnemy != null)
         {
 

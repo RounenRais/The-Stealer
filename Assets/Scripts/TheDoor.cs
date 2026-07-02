@@ -41,7 +41,7 @@ public class TheDoor : MonoBehaviour
                 Inventory.instance.altBar[i] = null;
                 InventoryUI.instance.slots[i].SetEmpty();
 
-                Debug.Log("Kapý açý ldý!");
+                Debug.Log("Door is opened!");
                 Destroy(gameObject);
                 return;
             }
